@@ -1,0 +1,265 @@
+	html {
+			height: 100%;
+		}
+		body {
+			height: 100%;
+			/*min-height: 100px;*/
+			margin:0px;
+			padding:0px;
+			display: flex;
+			flex-direction: column;
+		}
+		header {
+			width: 100%;
+			height: 10%;
+			min-width: 925px;
+			min-height: 70px;
+			background-color: #484E59;
+		}
+		header img {
+			margin-left: 20px;
+			width: 60px;
+			height: 60px;
+			color: #FFFFFF;
+			float: left;
+		}
+		@font-face {
+			font-family: myFont;
+			src:url('../fonts/华文行楷.ttf');
+		}
+		#user-h2 {
+			margin-left: 20px;
+			margin-top: 20px;
+			margin-bottom: 0px;
+			height: 30px;
+			color: #FFFFFF;
+			float: left;
+			vertical-align: middle;
+			font-family: myFont;
+			font-size: 30px;
+		}
+		header a {
+			margin-right: 20px;
+			color: #FFFFFF;
+			float: right;
+			line-height: 70px;
+			text-decoration: none;
+		}
+		#center {
+			display: flex;
+			flex-direction: row;
+			height: 90%;
+			min-height: 215px;
+		}
+		#left {
+			width: 11%;
+			height: 100%;
+			min-width: 75px;
+			min-height: 215px;
+			background-color: #EFF0EF;
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
+		#left p a {
+			text-decoration: none;
+			color: #000000;
+			font-size: 15px;
+		}
+		#left p {
+			font-size: 10px;
+		}
+		#content {
+			width: 89%;
+			height: 100%;
+			min-width: 850px;
+			min-height: 215px;
+			display: flex;
+			flex-direction: column;
+		}
+		#right {
+			margin-top: 1%;
+			margin-left:1%; 
+			width: 99%;
+			height: 94%;
+			min-height: 180px;
+		}
+		span:hover {
+			cursor: pointer;
+		}
+		table {
+			margin-top: 20px;
+			width: 1100px;
+		}
+		table a{
+			text-decoration: none;
+			color: #000000;
+		}
+		
+		footer {
+			width: 100%;
+			height: 5%;
+			min-height: 25px;
+			text-align: center;
+			background-color: #835678;
+		}
+
+		#header {
+			width: 100%;
+			height: 10%;
+			min-width: 925px;
+			min-height: 70px;
+			background-color: #484E59;
+		}
+		#center-add {
+			display: flex;
+			flex-direction: row;
+			height: 90%;
+			min-height: 547.9px;
+		}
+		#left-add {
+			width: 11%;
+			height: 100%;
+			min-width: 75px;
+			min-height: 215px;
+			background-color: #EFF0EF;
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
+		#left-add p a {
+			text-decoration: none;
+			color: #000000;
+			font-size: 15px;
+		}
+		#left-add img {
+			
+		}
+		#left-add p {
+			font-size: 10px;
+		}
+
+		#content-add {
+			width: 89%;
+			height: 100%;
+			min-width: 850px;
+			min-height: 215px;
+			display: flex;
+			flex-direction: column;
+		}
+		#right-add {
+			/*margin-top: 1%;*/
+			margin-left:1%; 
+			width: 99%;
+			height: 95%;
+			min-height: 180px;
+		}
+		h3 {
+			text-align: center;
+		}
+		.input {
+			width: 500px;
+			height: 25px;
+		}
+		select {
+			width: 500px;
+			height: 25px;
+		}
+		#hobby {
+			height: 80px;
+		}
+		#right-add-center {
+			display: flex;
+			flex-direction: row;
+		}
+		#right-add-center-right {
+			margin-left: 30px;
+		}
+		#right-add-center-right img {
+			border: 1px solid gray;
+			width: 200px;
+			height: 200px;
+			border-radius: 15px;
+		}
+		#right-add-center-right button {
+			border: 1px solid gray;
+			border-radius: 15px;
+			width: 200px;
+			background-color: white;
+		}
+		#div_button {
+			text-align: center;
+		}
+		#div_button input {
+			margin-left: 20px;
+			width: 50px;
+			height: 30px;
+			color: white;
+			border-style: none;
+		}
+		#sub {
+			background-color: #5EBF59;
+		}
+		#res {
+			background-color: #0496C2;
+		}
+		#but {
+			background-color: #E2DFDA;
+		}
+		
+		/*
+		
+		login.jsp
+		
+		*/
+		.div1 {
+			position: relative;
+			margin: 140px auto;
+			width: 600px;
+			height: 300px;
+			border: 1px solid gray;
+		}
+		.div2 {
+			position: relative;
+			margin: 20px;
+			width: 200px;
+			height: 260px;
+			float: left;
+		}
+		.div3 {
+			margin: 20px;
+			width: 310px;
+			height: 260px;
+			float: right;
+		}
+		.div4 {
+			margin: 0px;
+			width: 310px;
+			height: 80px;
+		}
+		.img1 {
+			margin-top: 0px;
+			margin-left: 40px;
+			float: left;
+		}
+		#h2 {
+			margin: 10px;
+		}
+		.div5 {
+			margin-left: 30px
+		}
+		
+		.login {
+			width: 50px;
+			height: 30px;
+			margin-left: 40px;
+		}
+		.reset{
+			width: 50px;
+			height: 30px;
+			margin-left: 40px;
+		}
+		
+		
