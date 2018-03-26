@@ -27,6 +27,15 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	/**
+	 * 分页查询商品
+	 */
+	@Override
+	public List<ProductModel> productListPage(String name, String typeName, int index) {
+		
+		return this.productDao.productListPage(name, typeName, index);
+	}
+	
+	/**
 	 * 根据id查询商品
 	 */
 	@Override
@@ -52,5 +61,6 @@ public class ProductServiceImpl implements ProductService{
 		
 		this.productDao.productDelete(id);
 	}
+
 
 }

@@ -26,5 +26,21 @@ public class OrderServiceImpl implements OrderService{
 		return this.orderDao.orderList(status,userName);
 	}
 	
-	
+	/**
+	 * 分页查询订单
+	 */
+	@Override
+	public List<OrderModel> orderListPage(int status,String userName,int index) {
+		
+		return this.orderDao.orderListPage(status,userName,index);
+	}
+
+	/**
+	 * 订单发货
+	 */
+	@Override
+	public void orderSend(int id) {
+		
+		this.orderDao.orderSend(id);
+	}
 }

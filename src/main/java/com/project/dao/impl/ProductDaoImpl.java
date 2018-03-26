@@ -49,6 +49,33 @@ public class ProductDaoImpl implements ProductDao{
 	}
 	
 	/**
+	 * 分页查询商品
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ProductModel> productListPage(String name, String typeName, int index) {
+		
+		String query="from ProductModel";
+		if(name!=null&&name!=""){
+			name="%"+name+"%";
+			if(typeName!=null&&typeName!=""){
+				query=query+" where productName like ? and type_id=(select id from ProductTypeModel where typeName=?)";
+				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, name).setParameter(1,typeName).setFirstResult((index-1)*5).setMaxResults(5).list();
+			}else{
+				query=query+" where productName like ?";
+				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, name).setFirstResult((index-1)*5).setMaxResults(5).list();
+			}	
+		}else{
+			if(typeName!=null&&typeName!=""){
+				query=query+" where type_id=(select id from ProductTypeModel where typeName=?)";
+				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0,typeName).setFirstResult((index-1)*5).setMaxResults(5).list();
+			}else{
+				return this.sessionFactory.getCurrentSession().createQuery(query).setFirstResult((index-1)*5).setMaxResults(5).list();
+			}
+		}
+	}
+	
+	/**
 	 * 根据id查询商品列表
 	 */
 	@Override
@@ -77,4 +104,6 @@ public class ProductDaoImpl implements ProductDao{
 		ProductModel productType=new ProductModel(id);
 		this.sessionFactory.getCurrentSession().delete(productType);
 	}
+
+	
 }

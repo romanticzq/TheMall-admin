@@ -1,6 +1,8 @@
 package com.project.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -24,8 +27,8 @@ public class OrderModel {
 	private int id;
 	private int status;
 	private double price;
-	private Date createDate;
-	private Date editDate;
+	private String createDate=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+	private String editDate=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 	private String detail;
 	private int number;
 	private String message;
@@ -39,6 +42,16 @@ public class OrderModel {
 	}
 	public void setUser(UserModel user) {
 		this.user = user;
+	}
+	
+	@OneToMany
+	private Set<OrderModel> OrderModels;
+	
+	public Set<OrderModel> getOrderModels() {
+		return OrderModels;
+	}
+	public void setOrderModels(Set<OrderModel> orderModels) {
+		OrderModels = orderModels;
 	}
 	/*
 	 * setter and getter
@@ -61,16 +74,16 @@ public class OrderModel {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
-	public Date getEditDate() {
+	public String getEditDate() {
 		return editDate;
 	}
-	public void setEditDate(Date editDate) {
+	public void setEditDate(String editDate) {
 		this.editDate = editDate;
 	}
 	public String getDetail() {
@@ -95,7 +108,7 @@ public class OrderModel {
 	/*
 	 * 构造方法
 	 */
-	public OrderModel(int id, int status, double price, Date createDate, Date editDate, String detail, int number,
+	public OrderModel(int id, int status, double price, String createDate, String editDate, String detail, int number,
 			String message) {
 		super();
 		this.id = id;
@@ -107,7 +120,7 @@ public class OrderModel {
 		this.number = number;
 		this.message = message;
 	}
-	public OrderModel(int status, double price, Date createDate, Date editDate, String detail, int number,
+	public OrderModel(int status, double price, String createDate, String editDate, String detail, int number,
 			String message) {
 		super();
 		this.status = status;

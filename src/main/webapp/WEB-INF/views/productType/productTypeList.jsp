@@ -30,7 +30,7 @@
 			}
 			
 			if(index==101){
-				if(pageNo<($("span:eq(1)").html()-1)){
+				if(pageNo<($("span:eq(1)").html())){
 					index=pageNo+1;
 				}else{
 					index=pageNo;
@@ -70,7 +70,7 @@
 				<div id="right_head">
 					
 					<form method="post" action="productType_list">
-						用户名称：<input type="text" name="typeName" id="typeName" value="${typeName }">
+						商品类型名称：<input type="text" name="typeName" id="typeName" value="${typeName }">
 						<input type="submit" value="查询">
 						<input type="reset" value="重置">
 					</form>

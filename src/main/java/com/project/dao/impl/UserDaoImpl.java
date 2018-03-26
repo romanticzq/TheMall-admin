@@ -88,4 +88,53 @@ public class UserDaoImpl implements UserDao{
 		this.sessionFactory.getCurrentSession().delete(user);
 	}
 
+	/**
+	 * 分页查询用户
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserModel> userListPage(String userName, int status, int sex, int index) {
+		
+		String query="from UserModel";
+		if(userName!=null&&userName!=""){
+			userName="%"+userName+"%";
+			query=query+" where userName like ?";
+			if(status!=0) {
+				query=query+" and status=?";
+				if(sex!=0){
+					query=query+" and sex=?";
+					return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, userName).setParameter(1, status).setParameter(2, sex).setFirstResult((index-1)*5).setMaxResults(5).list();
+				}else {
+					return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, userName).setParameter(1, status).setFirstResult((index-1)*5).setMaxResults(5).list();
+				}
+				
+			}else {
+				if(sex!=0){
+					query=query+" and sex=?";
+					return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, userName).setParameter(1, sex).setFirstResult((index-1)*5).setMaxResults(5).list();
+				}else {
+					return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, userName).setFirstResult((index-1)*5).setMaxResults(5).list();
+				}
+			}
+		}else{
+			if(status!=0) {
+				query=query+" where status=?";
+				if(sex!=0){
+					query=query+" and sex=?";
+					return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, status).setParameter(1, sex).setFirstResult((index-1)*5).setMaxResults(5).list();
+				}else{
+					return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, status).setFirstResult((index-1)*5).setMaxResults(5).list();
+				}
+			}else {
+				if(sex!=0){
+					query=query+" where sex=?";
+					return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, sex).setFirstResult((index-1)*5).setMaxResults(5).list();
+				}else {
+					System.out.println("没有参数");
+					return this.sessionFactory.getCurrentSession().createQuery(query).setFirstResult((index-1)*5).setMaxResults(5).list();
+				}
+			}
+		}
+	}
+
 }

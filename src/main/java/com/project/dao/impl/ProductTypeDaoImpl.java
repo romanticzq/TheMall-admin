@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.dao.ProductTypeDao;
-import com.project.model.Page;
 import com.project.model.ProductTypeModel;
 
 @Repository
@@ -25,7 +24,8 @@ public class ProductTypeDaoImpl implements ProductTypeDao{
 		
 		String query="from ProductTypeModel";
 		if(typeName!=null&&typeName!=""){
-			query=query+" where typeName=?";
+			query=query+" where typeName like ?";
+			typeName="%"+typeName+"%";
 			return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, typeName).list();
 		}
 		return this.sessionFactory.getCurrentSession().createQuery(query).list();
@@ -40,7 +40,8 @@ public class ProductTypeDaoImpl implements ProductTypeDao{
 		
 		String query="from ProductTypeModel";
 		if(typeName!=null&&typeName!=""){
-			query=query+" where typeName=?";
+			query=query+" where typeName like ?";
+			typeName="%"+typeName+"%";
 			return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, typeName).setFirstResult((index-1)*5).setMaxResults(5).list();
 		}
 		return this.sessionFactory.getCurrentSession().createQuery(query).setFirstResult((index-1)*5).setMaxResults(5).list();
@@ -74,15 +75,5 @@ public class ProductTypeDaoImpl implements ProductTypeDao{
 		this.sessionFactory.getCurrentSession().delete(productType);
 	}
 
-	/**
-	 * 分页查询商品类型记录
-	 */
-	@Override
-	public Page productTypeListPage(Page page) {
-		
-		return null;
-	}
-
-	
 	
 }

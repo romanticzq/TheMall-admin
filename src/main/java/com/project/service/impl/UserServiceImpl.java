@@ -44,4 +44,13 @@ public class UserServiceImpl implements UserService{
 		this.userDao.userDelete(id);
 	}
 
+	/**
+	 * 分页查询用户
+	 */
+	@Override
+	public List<UserModel> userListPage(String userName, int status, int sex, int index) {
+		
+		return this.userDao.userListPage(userName, status, sex, index);
+	}
+
 }

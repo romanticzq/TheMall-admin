@@ -1,6 +1,8 @@
 package com.project.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -26,8 +29,8 @@ public class ProductModel {
 	private double price;
 	private String description;
 	private String imgUrl;
-	private Date createDate=new Date();
-	private Date editDate=new Date();
+	private String createDate=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+	private String editDate=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 	
 	@ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER)
 	@JoinColumn(name="type_id")
@@ -38,6 +41,16 @@ public class ProductModel {
 	}
 	public void setType(ProductTypeModel type) {
 		this.type = type;
+	}
+	
+	@OneToMany
+	private Set<OrderModel> OrderModels;
+	
+	public Set<OrderModel> getOrderModels() {
+		return OrderModels;
+	}
+	public void setOrderModels(Set<OrderModel> orderModels) {
+		OrderModels = orderModels;
 	}
 	/*
 	 * setter and getter
@@ -78,16 +91,16 @@ public class ProductModel {
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
-	public Date getEditDate() {
+	public String getEditDate() {
 		return editDate;
 	}
-	public void setEditDate(Date editDate) {
+	public void setEditDate(String editDate) {
 		this.editDate = editDate;
 	}
 	
@@ -95,7 +108,7 @@ public class ProductModel {
 	 * 构造方法
 	 */
 	public ProductModel(int id, String productName, int number, double price, String description, String imgUrl,
-			Date createDate, Date editDate) {
+			String createDate, String editDate) {
 		super();
 		this.id = id;
 		this.productName = productName;
@@ -107,7 +120,7 @@ public class ProductModel {
 		this.editDate = editDate;
 	}
 	public ProductModel(String productName, int number, double price, String description, String imgUrl,
-			Date createDate, Date editDate) {
+			String createDate, String editDate) {
 		super();
 		this.productName = productName;
 		this.number = number;

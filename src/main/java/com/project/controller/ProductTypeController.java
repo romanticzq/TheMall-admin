@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.project.model.Page;
 import com.project.model.ProductTypeModel;
 import com.project.service.ProductTypeService;
 
@@ -21,42 +20,9 @@ public class ProductTypeController {
 	@Autowired
 	private ProductTypeService productTypeService;
 
-	//查询第几页
-	private int pageNo=1;
-	public int getPageNo() {
-		return pageNo;
-	}
-
-	public void setPageNo(int pageNo) {
-		this.pageNo = pageNo;
-	}
-
-	//类型名称
-	private String typeName=null;
-	
-	public String getTypeName() {
-		return typeName;
-	}
-
-	public void setTypeName(String typeName) {
-		this.typeName = typeName;
-	}
-
-	//类型列表
-	private List<ProductTypeModel> type=null;
-	
-	public List<ProductTypeModel> getType() {
-		return type;
-	}
-
-	public void setType(List<ProductTypeModel> type) {
-		this.type = type;
-	}
-
 	/**
 	 * 查询商品类型列表
 	 */
-	@SuppressWarnings("null")
 	@RequestMapping(value="productType_list")
 	public ModelAndView productTypeList(String typeName){
 		System.out.println("进入显示");
@@ -77,25 +43,6 @@ public class ProductTypeController {
 		return modelAndView;
 	}
 	
-	/**
-	 * 分页查询商品类型列表
-	 */
-	@RequestMapping(value="productType_list_page")
-	public ModelAndView productTypeListPage(){
-		System.out.println("进入显示");
-		ModelAndView modelAndView=new ModelAndView("productType/productTypeList");
-		Page page=new Page();
-		type=this.productTypeService.productTypeList(typeName);
-		page.setList(type);
-		if(type.size()%page.getPageSize()==0){
-			page.setPages(type.size()/page.getPageSize());
-		}else{
-			page.setPages(type.size()/page.getPageSize()+1);
-		}
-		page.print();
-		modelAndView.addObject("page", page);
-		return modelAndView;
-	}
 	
 	/**
 	 * 分页插件查询商品类型列表

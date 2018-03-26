@@ -1,5 +1,6 @@
 package com.project.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -27,8 +28,8 @@ public class UserModel {
 	private String realName;
 	private String personId;
 	private String address;
-	private Date createDate;
-	private Date editDate;
+	private String createDate=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+	private String editDate=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 	public int getId() {
 		return id;
 	}
@@ -95,20 +96,20 @@ public class UserModel {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
-	public Date getEditDate() {
+	public String getEditDate() {
 		return editDate;
 	}
-	public void setEditDate(Date editDate) {
+	public void setEditDate(String editDate) {
 		this.editDate = editDate;
 	}
 	public UserModel(int id, String userName, String password, String payPassword, int sex, String email, int count,
-			int status, String realName, String personId, String address, Date createDate, Date editDate) {
+			int status, String realName, String personId, String address, String createDate, String editDate) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -125,7 +126,7 @@ public class UserModel {
 		this.editDate = editDate;
 	}
 	public UserModel(String userName, String password, String payPassword, int sex, String email, int count, int status,
-			String realName, String personId, String address, Date createDate, Date editDate) {
+			String realName, String personId, String address, String createDate, String editDate) {
 		super();
 		this.userName = userName;
 		this.password = password;

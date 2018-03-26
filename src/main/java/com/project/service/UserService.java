@@ -9,6 +9,9 @@ public interface UserService {
 	//查询用户
 	public List<UserModel> userList(String userName,int status,int sex);
 	
+	//查询用户
+	public List<UserModel> userListPage(String userName,int status,int sex,int index);
+		
 	//修改用户状态
 	public void userEdit(int id);
 	

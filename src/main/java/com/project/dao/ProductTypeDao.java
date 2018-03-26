@@ -2,16 +2,12 @@ package com.project.dao;
 
 import java.util.List;
 
-import com.project.model.Page;
 import com.project.model.ProductTypeModel;
 
 public interface ProductTypeDao {
 
 	//查询商品类型
 	public List<ProductTypeModel> productTypeList(String typeName);
-	
-	//分页查询商品类型
-	public Page productTypeListPage(Page page);
 	
 	//分页查询商品类型
 	public List<ProductTypeModel> productTypeListPage(String typeName,int index);
