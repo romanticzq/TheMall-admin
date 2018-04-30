@@ -17,7 +17,7 @@
 
 		<div id="content-add">
 			<div id="right-add">
-				<form action="#" onsubmit="return false" method="post" id="newsForm">
+				<form action="#" onsubmit="return product_edit()" method="post" id="newsForm">
 					<h3>新增&修改商品信息</h3>
 					<div id="right-add-center">
 						<div id="right-add-center-left">
@@ -33,6 +33,8 @@
 									</c:forEach>
 								</select>
 							</p>
+							<p><input type="file"  class="input" onchange="preview(this)" name="imgUrl" id="imgUrl"></p>
+							<img src="<%=request.getContextPath()%>${product.imgUrl }">
 						</div>
 						
 						<div id="right-add-center-right">
@@ -43,7 +45,7 @@
 					</div>
 					<hr>
 					<div id="div_button">
-						<input id="sub" type="submit" value="保存" onclick="product_edit()">
+						<input id="sub" type="submit" value="保存">
 						<input id="res" type="reset" value="重置">
 						<input id="but" type="button" value="返回" 
 						onclick="back_productList()">

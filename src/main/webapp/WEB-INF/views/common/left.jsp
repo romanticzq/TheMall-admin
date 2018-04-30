@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/common.js"></script>
 </head>
 <body>
 	<div id="left">
@@ -18,7 +19,7 @@
 				<hr style="border:1px;border-top:1px solid black;">
 			</p>
 			<p>
-				<a href="product_list" >商品管理</a>
+				<a href="product_list">商品管理</a>
 			    <hr style="border:1px;border-top:1px solid black;margin:14px 0px 0px 0px;padding:6px;">
 			</p>
 			<p>
@@ -26,12 +27,6 @@
 				<hr style="border:1px;border-top:1px solid black;">
 			</p>
 			
-			
-			
-		</div>
-		<div id="left-bottom">
-			<img src="<%=request.getContextPath()%>/images/logo1.png">
-			<p>当前登录用户</p>
 		</div>
 	</div>
 </body>

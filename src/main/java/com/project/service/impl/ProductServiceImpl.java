@@ -21,18 +21,18 @@ public class ProductServiceImpl implements ProductService{
 	 * 查询商品
 	 */
 	@Override
-	public List<ProductModel> productList(String name,String typeName) {
+	public List<ProductModel> productList(String name,String typeName,String bigTypeName) {
 		
-		return this.productDao.productList(name,typeName);
+		return this.productDao.productList(name,typeName,bigTypeName);
 	}
 
 	/**
 	 * 分页查询商品
 	 */
 	@Override
-	public List<ProductModel> productListPage(String name, String typeName, int index) {
+	public List<ProductModel> productListPage(String name, String typeName,String bigTypeName, int index) {
 		
-		return this.productDao.productListPage(name, typeName, index);
+		return this.productDao.productListPage(name, typeName,bigTypeName, index);
 	}
 	
 	/**

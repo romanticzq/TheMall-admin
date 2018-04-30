@@ -2,7 +2,6 @@ package com.project.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -44,15 +42,6 @@ public class OrderModel {
 		this.user = user;
 	}
 	
-	@OneToMany
-	private Set<OrderModel> OrderModels;
-	
-	public Set<OrderModel> getOrderModels() {
-		return OrderModels;
-	}
-	public void setOrderModels(Set<OrderModel> orderModels) {
-		OrderModels = orderModels;
-	}
 	/*
 	 * setter and getter
 	 */

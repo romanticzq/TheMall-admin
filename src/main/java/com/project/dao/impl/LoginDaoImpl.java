@@ -25,4 +25,11 @@ public class LoginDaoImpl implements LoginDao{
 		return false;
 	}
 
+	
+	@Override
+	public AdminModel adminLoginByName(String name) {
+		AdminModel admin =(AdminModel) sessionFactory.getCurrentSession().createQuery("from AdminModel where userName=?").setParameter(0, name).uniqueResult();
+		return admin;
+	}
+
 }

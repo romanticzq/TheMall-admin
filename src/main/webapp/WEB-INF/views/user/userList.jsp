@@ -161,7 +161,13 @@
 								<td>${temp.address }</td>
 								<td>${temp.createDate }</td>
 								<td>${temp.editDate }</td>
-								<td><a href="#" onclick="return judge(${temp.id })">【修改状态】</a>&nbsp;<a  onclick="return delete_user(${temp.id })">【删除】</a></td>
+								<td>
+									<a href="#" onclick="return judge(${temp.id })">
+										<c:if test="${temp.status == 1 }">【冻结】</c:if>  
+										<c:if test="${temp.status == 2 }">【解冻】</c:if>  
+									</a>&nbsp;
+									<a  onclick="return delete_user(${temp.id })">【删除】</a>
+								</td>
 							</tr>
 						</c:forEach>
 						

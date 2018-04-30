@@ -7,10 +7,8 @@
 </head>
 <body>
 	<header id="header">
-		<img src="<%=request.getContextPath()%>/images/logo2.png">
 		<h2  id="user-h2">孕妈妈商城后台管理系统</h2>
-		<a href="">退出</a>
-		<a href="">帮助</a>
+		<a href="admin_loginout">退出</a>
 	</header>	
 </body>
 </html>

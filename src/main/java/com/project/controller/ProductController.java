@@ -19,6 +19,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.project.model.ProductModel;
 import com.project.model.ProductTypeModel;
+import com.project.service.BigTypeService;
 import com.project.service.ProductService;
 import com.project.service.ProductTypeService;
 
@@ -31,25 +32,24 @@ public class ProductController {
 	@Autowired
 	private ProductTypeService productTypeService;
 	
+	@Autowired
+	private BigTypeService bigTypeService;
+	
 	/**
 	 * 查询商品
 	 */
 	@RequestMapping(value="product_list")
-	public ModelAndView productList(String productName,String typeName){
-//		try {
-//			if(typeName!=null&&typeName!="")
-//				typeName= new String(typeName.getBytes("ISO-8859-1") , "utf-8");
-//		} catch (UnsupportedEncodingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} 
+	public ModelAndView productList(String productName,String typeName,String bigTypeName){
+
 		System.out.println("进入显示"+typeName);
 		ModelAndView modelAndView=new ModelAndView("product/productList");
-		List<ProductModel> productList=this.productService.productList(productName,typeName);
+		List<ProductModel> productList=this.productService.productList(productName,typeName,bigTypeName);
 		modelAndView.addObject("num", productList.size());
 		modelAndView.addObject("typeName", typeName);
+		modelAndView.addObject("bigTypeName", bigTypeName);
 		modelAndView.addObject("productName", productName);
-		modelAndView.addObject("typeList", this.productTypeService.productTypeList(null));
+//		modelAndView.addObject("typeList", this.productTypeService.productTypeList(null,null));
+		modelAndView.addObject("bigTypeList", this.bigTypeService.bigTypeList());
 		
 		int size=productList.size();
 		if(size>5){
@@ -66,10 +66,10 @@ public class ProductController {
 	 */
 	@RequestMapping(value="product_list_page_plug", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String productListPagePlug(String productName,String typeName,int index){
+	public String productListPagePlug(String productName,String typeName,String bigTypeName,int index){
 		
 		System.out.println("进入显示");
-		List<ProductModel> productList=this.productService.productListPage(productName, typeName, index);
+		List<ProductModel> productList=this.productService.productListPage(productName, typeName, bigTypeName, index);
 		JSONObject jo=new JSONObject();
 		jo.put("productList", productList);
 		System.out.println("111:"+productList);
@@ -95,7 +95,7 @@ public class ProductController {
 			product=productById(product.getId());
 		}
 		modelAndView.addObject("product", product);
-		List<ProductTypeModel> type=productTypeService.productTypeList(null);
+		List<ProductTypeModel> type=productTypeService.productTypeList(null,null);
 		modelAndView.addObject("type", type);
 		return modelAndView;
 	}
@@ -137,7 +137,7 @@ public class ProductController {
 			product.setCreateDate(productById(product.getId()).getCreateDate());
 		}
 		productService.productEdit(product);
-		return productList(null,null);
+		return productList(null,null,null);
 	}
 	
 	/**
@@ -147,6 +147,20 @@ public class ProductController {
 	public ModelAndView productTypeDelete(int id){
 		System.out.println("去新增或修改");
 		productService.productDelete(id);
-		return productList(null,null);
+		return productList(null,null,null);
+	}
+	
+	/**
+	 * 查询商品类型
+	 */
+	@RequestMapping(value="productType_List_bybigtype", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String productTypeListByBigtype(String typeName){
+		
+		List<ProductTypeModel> productTypeList=this.productTypeService.productTypeList(null, typeName);
+		JSONObject jo=new JSONObject();
+		jo.put("productTypeList", productTypeList);
+		System.out.println(productTypeList.size());
+		return JSON.toJSONString(jo, SerializerFeature.DisableCircularReferenceDetect);
 	}
 }

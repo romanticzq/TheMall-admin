@@ -7,10 +7,10 @@ import com.project.model.ProductModel;
 public interface ProductService {
 
 	//查询商品
-	public List<ProductModel> productList(String name,String typeName);
+	public List<ProductModel> productList(String name,String typeName,String bigTypeName);
 	
 	//分页查询商品
-	public List<ProductModel> productListPage(String name,String typeName,int index);
+	public List<ProductModel> productListPage(String name,String typeName,String bigTypeName,int index);
 		
 	//根据id查询商品
 	public ProductModel productById(int id);

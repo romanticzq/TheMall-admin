@@ -164,7 +164,7 @@
 					<label>当前页数:<span></span>，共:<span></span>页，<span></span>条记录</label>
 				</div>
 			</div>
-			<footer>Copyright2017轻实训版权所有</footer>
+			<footer>CopyRight&nbsp;2018&nbsp;&nbsp;重庆工商大学&nbsp;版权所有</footer>
 		</div>
 	</div>
 </body>

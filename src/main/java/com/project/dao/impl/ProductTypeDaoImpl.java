@@ -20,15 +20,27 @@ public class ProductTypeDaoImpl implements ProductTypeDao{
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ProductTypeModel> productTypeList(String typeName) {
+	public List<ProductTypeModel> productTypeList(String typeName,String bigTypeName) {
 		
 		String query="from ProductTypeModel";
 		if(typeName!=null&&typeName!=""){
-			query=query+" where typeName like ?";
 			typeName="%"+typeName+"%";
-			return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, typeName).list();
+			if(bigTypeName!=null&&bigTypeName!=""){
+				query=query+" where typeName like ? and bigType_id=(select id from BigType where typeName=?)";
+				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, typeName).setParameter(1,bigTypeName).list();
+			}else{
+				query=query+" where typeName like ?";
+				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, typeName).list();
+			}
+		}else{
+			if(bigTypeName!=null&&bigTypeName!=""){
+				query=query+" where bigType_id=(select id from BigType where typeName=?)";
+				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, bigTypeName).list();
+			}else{
+				return this.sessionFactory.getCurrentSession().createQuery(query).list();
+			}
 		}
-		return this.sessionFactory.getCurrentSession().createQuery(query).list();
+		
 	}
 	
 	/**
@@ -36,15 +48,26 @@ public class ProductTypeDaoImpl implements ProductTypeDao{
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ProductTypeModel> productTypeListPage(String typeName,int index) {
+	public List<ProductTypeModel> productTypeListPage(String typeName,String bigTypeName,int index) {
 		
 		String query="from ProductTypeModel";
 		if(typeName!=null&&typeName!=""){
-			query=query+" where typeName like ?";
 			typeName="%"+typeName+"%";
-			return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, typeName).setFirstResult((index-1)*5).setMaxResults(5).list();
+			if(bigTypeName!=null&&bigTypeName!=""){
+				query=query+" where typeName like ? and bigType_id=(select id from BigType where typeName=?)";
+				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, typeName).setParameter(1,bigTypeName).setFirstResult((index-1)*5).setMaxResults(5).list();
+			}else{
+				query=query+" where typeName like ?";
+				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, typeName).setFirstResult((index-1)*5).setMaxResults(5).list();
+			}
+		}else{
+			if(bigTypeName!=null&&bigTypeName!=""){
+				query=query+" where bigType_id=(select id from BigType where typeName=?)";
+				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, bigTypeName).setFirstResult((index-1)*5).setMaxResults(5).list();
+			}else{
+				return this.sessionFactory.getCurrentSession().createQuery(query).setFirstResult((index-1)*5).setMaxResults(5).list();
+			}
 		}
-		return this.sessionFactory.getCurrentSession().createQuery(query).setFirstResult((index-1)*5).setMaxResults(5).list();
 	}
 	
 	/**

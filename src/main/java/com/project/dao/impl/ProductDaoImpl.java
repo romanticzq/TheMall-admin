@@ -25,7 +25,7 @@ public class ProductDaoImpl implements ProductDao{
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ProductModel> productList(String name,String typeName) {
+	public List<ProductModel> productList(String name,String typeName,String bigTypeName) {
 		
 		String query="from ProductModel";
 		if(name!=null&&name!=""){
@@ -34,15 +34,25 @@ public class ProductDaoImpl implements ProductDao{
 				query=query+" where productName like ? and type_id=(select id from ProductTypeModel where typeName=?)";
 				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, name).setParameter(1,typeName).list();
 			}else{
-				query=query+" where productName like ?";
-				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, name).list();
+				if(bigTypeName!=null&&bigTypeName!=""){
+					query=query+" where productName like ? and type_id in (select id from ProductTypeModel where bigType_id=(select id from BigType where typeName=?))";
+					return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, name).setParameter(1,bigTypeName).list();
+				}else{
+					query=query+" where productName like ?";
+					return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, name).list();
+				}
 			}	
 		}else{
 			if(typeName!=null&&typeName!=""){
 				query=query+" where type_id=(select id from ProductTypeModel where typeName=?)";
 				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0,typeName).list();
 			}else{
-				return this.sessionFactory.getCurrentSession().createQuery(query).list();
+				if(bigTypeName!=null&&bigTypeName!=""){
+					query=query+" where type_id in (select id from ProductTypeModel where bigType_id=(select id from BigType where typeName=?))";
+					return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, bigTypeName).list();
+				}else{
+					return this.sessionFactory.getCurrentSession().createQuery(query).list();
+				}
 			}
 		}
 		
@@ -53,7 +63,7 @@ public class ProductDaoImpl implements ProductDao{
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ProductModel> productListPage(String name, String typeName, int index) {
+	public List<ProductModel> productListPage(String name, String typeName,String bigTypeName, int index) {
 		
 		String query="from ProductModel";
 		if(name!=null&&name!=""){
@@ -62,15 +72,25 @@ public class ProductDaoImpl implements ProductDao{
 				query=query+" where productName like ? and type_id=(select id from ProductTypeModel where typeName=?)";
 				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, name).setParameter(1,typeName).setFirstResult((index-1)*5).setMaxResults(5).list();
 			}else{
-				query=query+" where productName like ?";
-				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, name).setFirstResult((index-1)*5).setMaxResults(5).list();
+				if(bigTypeName!=null&&bigTypeName!=""){
+					query=query+" where productName like ? and type_id in (select id from ProductTypeModel where bigType_id=(select id from BigType where typeName=?))";
+					return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, name).setParameter(1,bigTypeName).setFirstResult((index-1)*5).setMaxResults(5).list();
+				}else{
+					query=query+" where productName like ?";
+					return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, name).setFirstResult((index-1)*5).setMaxResults(5).list();
+				}
 			}	
 		}else{
 			if(typeName!=null&&typeName!=""){
 				query=query+" where type_id=(select id from ProductTypeModel where typeName=?)";
 				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0,typeName).setFirstResult((index-1)*5).setMaxResults(5).list();
 			}else{
-				return this.sessionFactory.getCurrentSession().createQuery(query).setFirstResult((index-1)*5).setMaxResults(5).list();
+				if(bigTypeName!=null&&bigTypeName!=""){
+					query=query+" where type_id in (select id from ProductTypeModel where bigType_id=(select id from BigType where typeName=?))";
+					return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, bigTypeName).setFirstResult((index-1)*5).setMaxResults(5).list();
+				}else{
+					return this.sessionFactory.getCurrentSession().createQuery(query).setFirstResult((index-1)*5).setMaxResults(5).list();
+				}
 			}
 		}
 	}
@@ -90,7 +110,7 @@ public class ProductDaoImpl implements ProductDao{
 	@Override
 	public void productEdit(ProductModel productModel) {
 		
-		List<ProductTypeModel> type=ProductTypeDao.productTypeList(productModel.getType().getTypeName());
+		List<ProductTypeModel> type=ProductTypeDao.productTypeList(productModel.getType().getTypeName(),null);
 		productModel.setType(type.get(0));
 		this.sessionFactory.getCurrentSession().saveOrUpdate(productModel);
 	}

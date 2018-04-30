@@ -36,6 +36,7 @@ function productType_edit() {
 			window.location.reload();
 		}
 	})
+	return false;
 }
 //返回方法
 function back() {
@@ -139,6 +140,7 @@ function product_edit() {
 			window.location.reload();
 		}
 	})
+	return false;
 }
 
 //返回方法

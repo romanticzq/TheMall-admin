@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.dao.LoginDao;
+import com.project.model.AdminModel;
 import com.project.service.LoginService;
 
 @Transactional
@@ -18,6 +19,12 @@ public class LoginServiceImpl implements LoginService{
 	public boolean adminLogin(String name, String password) {
 		
 		return this.loginDao.adminLogin(name, password);
+	}
+
+	@Override
+	public AdminModel adminLoginByName(String name) {
+		
+		return this.loginDao.adminLoginByName(name);
 	}
 
 }

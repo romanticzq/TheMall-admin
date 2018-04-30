@@ -17,6 +17,13 @@
     <script src="<%=request.getContextPath()%>/res/myPage.js" type="text/javascript"></script>
 <script type="text/javascript">
     
+		$(function () {
+			$("select option").removeAttr("selected");
+			var bigTypeName=$("#bigTypeName").val();
+		    $("select option:[value="+bigTypeName+"]").attr("selected","selected");
+		  
+		})
+    
         function loadData(num) {
         	
         	var numb=$("#pageList").val();
@@ -25,6 +32,7 @@
         
 		function selectPage(index) {
 			var name=$("#typeName").val();
+			var bigTypeName=$("#bigTypeName").val();
 			if(index==100){
 				index=pageNo-1;
 			}
@@ -39,7 +47,7 @@
 			$.ajax({
 				url:"productType_list_page_plug", //发送请求的地址
 				type:"post", //请求方式 ("POST" 或 "GET")
-				data:{name:name,index:index},  //发送到服务器的数据1
+				data:{name:name,bigTypeName:bigTypeName,index:index},  //发送到服务器的数据1
 				dataType:"json", //预期返回的数据类型
 				contentType: "application/x-www-form-urlencoded; charset=utf-8",//解决编码问题
 				scriptCharset: 'utf-8',
@@ -50,6 +58,7 @@
 				 $.each(list,function(n,item){
 					 var data='<tr class="tr1">'+  
 					    '<td>'+item.typeName+'</td>'+  
+					    '<td>'+item.bigType.typeName+'</td>'+ 
 					    '<td>'+item.createDate+'</td>'+  
 					    '<td>'+item.editDate+'</td>'+  
 					    '<td><a onclick="productType_to_edit('+item.id+')">【修改】</a>&nbsp;<a href="#" onclick="return delete_type('+item.id+')">【删除】</a></td></tr>'; 
@@ -70,6 +79,13 @@
 				<div id="right_head">
 					
 					<form method="post" action="productType_list">
+						顶级商品类型：
+						<select name="bigTypeName" style="width:220px">
+							<option value="">所有</option>
+							<c:forEach items="${bigTypeList }" var="temp">
+								<option value="${temp.typeName }">${temp.typeName }</option>
+							</c:forEach>
+						</select>
 						商品类型名称：<input type="text" name="typeName" id="typeName" value="${typeName }">
 						<input type="submit" value="查询">
 						<input type="reset" value="重置">
@@ -81,6 +97,7 @@
 					<table border="1" cellspacing="0">
 						<tr bgcolor="#EFF0EF">
 							<td>商品类型名称</td>
+							<td>父级商品类型名称</td>
 							<td>创建时间</td>
 							<td>修改时间</td>
 							<td style="text-align:center">操作</td>
@@ -88,6 +105,7 @@
 						<c:forEach items="${productTypeList}" var="temp" >
 							<tr class="tr1">
 								<td>${temp.typeName }</td>
+								<td>${temp.bigType.typeName }</td>
 								<td>${temp.createDate }</td>
 								<td>${temp.editDate }</td>
 								<td><a onclick="productType_to_edit(${temp.id})">【修改】</a>&nbsp;<a onclick="return delete_type(${temp.id })">【删除】</a></td>
@@ -107,6 +125,7 @@
 							<!--设置最多显示的页码数 可以手动设置 默认为5-->
 							<input type="hidden" id="visiblePages" runat="server" value="5" />
 							<input type="hidden" id="pageList" runat="server" value="${num}" />
+							<input type="hidden" id="bigTypeName" runat="server" value="${bigTypeName}" />
 						</div>
 					</form>
 					<label>当前页数:<span></span>，共:<span></span>页，<span></span>条记录</label>

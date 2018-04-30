@@ -3,11 +3,15 @@ package com.project.model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -24,6 +28,16 @@ public class ProductTypeModel {
 	private String createDate=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 	private String editDate=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 	
+	@ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER)
+	@JoinColumn(name="bigType_id")
+	private BigType bigType;
+	
+	public BigType getBigType() {
+		return bigType;
+	}
+	public void setBigType(BigType bigType) {
+		this.bigType = bigType;
+	}
 	/*
 	 * setter and getter
 	 */

@@ -7,10 +7,10 @@ import com.project.model.ProductTypeModel;
 public interface ProductTypeDao {
 
 	//查询商品类型
-	public List<ProductTypeModel> productTypeList(String typeName);
+	public List<ProductTypeModel> productTypeList(String typeName,String bigTypeName);
 	
 	//分页查询商品类型
-	public List<ProductTypeModel> productTypeListPage(String typeName,int index);
+	public List<ProductTypeModel> productTypeListPage(String typeName,String bigTypeName,int index);
 	
 	//根据id查询商品类型
 	public ProductTypeModel productTypeById(int id);

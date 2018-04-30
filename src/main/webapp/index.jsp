@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:forward page="springmvc/admin_to_login"></jsp:forward>
+	<jsp:forward page="admin_to_login"></jsp:forward>
 </body>
 </html>

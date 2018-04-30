@@ -18,10 +18,34 @@
     <script type="text/javascript">
     
     $(function () {
-    	$("select option").removeAttr("selected");
-    	var typeName=$("#typeName").val();
-        $("select option:[value="+typeName+"]").attr("selected","selected");
-      
+    	
+    	$("select:first option").removeAttr("selected");
+    	var bigTypeName=$("#bigTypeName").val();
+        $("select:first option:[value="+bigTypeName+"]").attr("selected","selected");
+        
+        var bigTypeName=$("#bigTypeName").val();
+        if(bigTypeName!=null&&bigTypeName!=""){
+        	$.ajax({
+    			url:"productType_List_bybigtype", //发送请求的地址
+    			type:"post", //请求方式 ("POST" 或 "GET")
+    			async:false,
+    			data:{typeName:bigTypeName},  //发送到服务器的数据1
+    			dataType:"json", //预期返回的数据类型
+    			contentType: "application/x-www-form-urlencoded; charset=utf-8",//解决编码问题
+    			scriptCharset: 'utf-8',
+    			success:function(json){ //请求成功后的回调函数。
+    				var list=json.productTypeList;
+    				$('select .op').remove();
+    				$.each(list,function(n,item){
+    					 var data='<option class="op" value="'+ item. typeName +'">'+ item. typeName +'</option>';
+    					    $('select:last').append(data); 
+    				 })
+    			}
+    		});
+        }
+        
+        var typeName=$("#typeName").val();
+        $("select:last option:[value="+typeName+"]").attr("selected","selected");
     })
     
         function loadData(num) {
@@ -61,12 +85,33 @@
 					    '<td>'+item.number+'</td>'+  
 					    '<td>'+item.price+'</td>'+  
 					    '<td>'+item.description+'</td>'+  
-					    '<td>'+item.type.typeName+'</td>'+  
+					    '<td>'+item.type.typeName+'</td>'+ 
+					    '<td>'+item.type.bigType.typeName+'</td>'+  
 					    '<td>'+item.createDate+'</td>'+  
 					    '<td>'+item.editDate+'</td>'+ 
 					    '<td><a onclick="product_to_edit('+item.id+')">【修改】</a>&nbsp;<a href="#" onclick="return delete_product('+item.id+')">【删除】</a></td></tr>'; 
 					 $('table').append(data); 
 				 })
+				}
+			});
+        }
+		
+		function loadType() {
+        	var typeName=$("select:first option:selected").val();
+        	$.ajax({
+				url:"productType_List_bybigtype", //发送请求的地址
+				type:"post", //请求方式 ("POST" 或 "GET")
+				data:{typeName:typeName},  //发送到服务器的数据1
+				dataType:"json", //预期返回的数据类型
+				contentType: "application/x-www-form-urlencoded; charset=utf-8",//解决编码问题
+				scriptCharset: 'utf-8',
+				success:function(json){ //请求成功后的回调函数。
+					var list=json.productTypeList;
+					$('select .op').remove();
+					$.each(list,function(n,item){
+						 var data='<option class="op" value="'+ item. typeName +'">'+ item. typeName +'</option>';
+						    $('select:last').append(data); 
+					 })
 				}
 			});
         }
@@ -83,12 +128,16 @@
 					
 					<form method="post" action="product_list">
 						商品名称：<input type="text" name="productName" value="${productName}">
-						商品类型名称：
-						<select name="typeName" style="width:220px">
+						顶级商品类型：
+						<select name="bigTypeName" style="width:220px" onclick="loadType()">
 							<option value="">所有</option>
-							<c:forEach items="${typeList }" var="temp">
+							<c:forEach items="${bigTypeList }" var="temp">
 								<option value="${temp.typeName }">${temp.typeName }</option>
 							</c:forEach>
+						</select>
+						次级商品类型：
+						<select name="typeName" style="width:220px">
+							<option value="">所有</option>
 						</select>
 						<input type="submit" value="查询">
 						<input type="reset" value="重置">
@@ -104,6 +153,7 @@
 							<td>单价</td>
 							<td>描述</td>
 							<td>商品类型</td>
+							<td>顶级商品类型</td>
 							<td>创建时间</td>
 							<td>修改时间</td>
 							<td style="text-align:center">操作</td>
@@ -115,6 +165,7 @@
 								<td>${temp.price }</td>
 								<td>${temp.description }</td>
 								<td>${temp.type.typeName }</td>
+								<td>${temp.type.bigType.typeName }</td>
 								<td>${temp.createDate }</td>
 								<td>${temp.editDate }</td>
 								<td><a  onclick="return product_to_edit(${temp.id})">【修改】</a>&nbsp;<a href="#" onclick="return delete_product(${temp.id})">【删除】</a></td>
@@ -135,6 +186,7 @@
 							<input type="hidden" id="visiblePages" runat="server" value="5" />
 							<input type="hidden" id="pageList" runat="server" value="${num}" />
 							<input type="hidden" id="typeName" runat="server" value="${typeName}" />
+							<input type="hidden" id="bigTypeName" runat="server" value="${bigTypeName}" />
 							<input type="hidden" id="productName" runat="server" value="${productName}" />
 						</div>
 					</form>
