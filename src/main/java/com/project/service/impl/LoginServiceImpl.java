@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.dao.LoginDao;
-import com.project.model.AdminModel;
+import com.project.model.Admin;
 import com.project.service.LoginService;
 
 @Transactional
@@ -22,7 +22,7 @@ public class LoginServiceImpl implements LoginService{
 	}
 
 	@Override
-	public AdminModel adminLoginByName(String name) {
+	public Admin adminLoginByName(String name) {
 		
 		return this.loginDao.adminLoginByName(name);
 	}

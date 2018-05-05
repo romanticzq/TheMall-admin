@@ -1,6 +1,6 @@
 package com.project.dao;
 
-import com.project.model.AdminModel;
+import com.project.model.Admin;
 
 public interface LoginDao {
 	
@@ -8,5 +8,5 @@ public interface LoginDao {
 	public boolean adminLogin(String name,String password);
 	
 	//管理员登录
-	public AdminModel adminLoginByName(String name);
+	public Admin adminLoginByName(String name);
 }

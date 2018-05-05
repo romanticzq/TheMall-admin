@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -59,9 +60,9 @@
 					 var data='<tr class="tr1">'+  
 					    '<td>'+item.typeName+'</td>'+  
 					    '<td>'+item.bigType.typeName+'</td>'+ 
-					    '<td>'+item.createDate+'</td>'+  
-					    '<td>'+item.editDate+'</td>'+  
-					    '<td><a onclick="productType_to_edit('+item.id+')">【修改】</a>&nbsp;<a href="#" onclick="return delete_type('+item.id+')">【删除】</a></td></tr>'; 
+					    '<td>'+format(item.createDate)+'</td>'+  
+					    '<td>'+format(item.editDate)+'</td>'+  
+					    '<td><a href="productType_to_edit?id='+item.id+'">【修改】</a>&nbsp;<a href="#" onclick="delete_type('+item.id+')">【删除】</a></td></tr>'; 
 					 $('table').append(data); 
 				 })
 				}
@@ -70,12 +71,11 @@
     </script>
 </head>
 <body>
-	<jsp:include page="../common/header.jsp" />
 	<div id="center">
-		<jsp:include page="../common/left.jsp" />
 
 		<div id="content">
-			<div id="right">
+			<div id="right" style="margin-left:20px;">
+				<b>首页 > 商品管理 > 商品类型列表</b><p></p>
 				<div id="right_head">
 					
 					<form method="post" action="productType_list">
@@ -90,7 +90,7 @@
 						<input type="submit" value="查询">
 						<input type="reset" value="重置">
 					</form>
-					<button onclick="productType_to_edit()">新增商品类型</button>
+					<button onclick="window.location.href='productType_to_edit?id=0'" style="display:none">新增商品类型</button>
 				</div>
 
 				<div id="right_foot">
@@ -106,9 +106,13 @@
 							<tr class="tr1">
 								<td>${temp.typeName }</td>
 								<td>${temp.bigType.typeName }</td>
-								<td>${temp.createDate }</td>
-								<td>${temp.editDate }</td>
-								<td><a onclick="productType_to_edit(${temp.id})">【修改】</a>&nbsp;<a onclick="return delete_type(${temp.id })">【删除】</a></td>
+								<td>
+									<fmt:formatDate value="${temp.createDate }" pattern="yyyy-MM-dd HH:mm:ss" />
+								</td>
+								<td>
+									<fmt:formatDate value="${temp.editDate }" pattern="yyyy-MM-dd HH:mm:ss" />
+								</td>
+								<td><a href="productType_to_edit?id=${temp.id}">【修改】</a>&nbsp;<a href="#" onclick="delete_type(${temp.id })">【删除】</a></td>
 							</tr>
 						</c:forEach>
 						
@@ -131,7 +135,6 @@
 					<label>当前页数:<span></span>，共:<span></span>页，<span></span>条记录</label>
 				</div>
 			</div>
-			<footer>Copyright2017轻实训版权所有</footer>
 		</div>
 	</div>
 </body>

@@ -2,21 +2,21 @@ package com.project.service;
 
 import java.util.List;
 
-import com.project.model.ProductModel;
+import com.project.model.Commodity;
 
 public interface ProductService {
 
 	//查询商品
-	public List<ProductModel> productList(String name,String typeName,String bigTypeName);
+	public List<Commodity> productList(String name,String typeName,String bigTypeName);
 	
 	//分页查询商品
-	public List<ProductModel> productListPage(String name,String typeName,String bigTypeName,int index);
+	public List<Commodity> productListPage(String name,String typeName,String bigTypeName,int index);
 		
 	//根据id查询商品
-	public ProductModel productById(int id);
+	public Commodity productById(int id);
 			
 	//修改或增加商品
-	public void productEdit(ProductModel productModel);
+	public void productEdit(Commodity productModel);
 				
 	//删除商品
 	public void productDelete(int id);

@@ -1,21 +1,17 @@
 package com.project.model;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 @Entity
-@Table(name="tb_bigType")
+@Table
 public class BigType {
 
 	@Id                                                           
@@ -23,10 +19,17 @@ public class BigType {
 	private int id;//id                                           
 	private String typeName;//类型名称                                
 	private String imgUrl;//图片路径                                  
-	private String createDate=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-	private String editDate=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());                            
-	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)                           
-	private Set<ProductTypeModel> smallTypes=new HashSet<ProductTypeModel>();
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss",iso=ISO.DATE)
+	private Date createDate;//创建时间
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss",iso=ISO.DATE)
+	private Date editDate;//修改时间              
+	
+//	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)                           
+//	private Set<SmallType> smallTypes=new HashSet<SmallType>();
+	
+	/*
+	 * setter and getter
+	 */
 	public int getId() {
 		return id;
 	}
@@ -45,25 +48,29 @@ public class BigType {
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
-	public String getCreateDate() {
+	public Date getCreateDate() {
 		return createDate;
 	}
-	public void setCreateDate(String createDate) {
+	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	public String getEditDate() {
+	public Date getEditDate() {
 		return editDate;
 	}
-	public void setEditDate(String editDate) {
+	public void setEditDate(Date editDate) {
 		this.editDate = editDate;
 	}
-	public Set<ProductTypeModel> getSmallTypes() {
-		return smallTypes;
-	}
-	public void setSmallTypes(Set<ProductTypeModel> smallTypes) {
-		this.smallTypes = smallTypes;
-	}
-	public BigType(int id, String typeName, String imgUrl, String createDate, String editDate) {
+//	public Set<SmallType> getSmallTypes() {
+//		return smallTypes;
+//	}
+//	public void setSmallTypes(Set<SmallType> smallTypes) {
+//		this.smallTypes = smallTypes;
+//	}
+	
+	/*
+	 * 构造方法
+	 */
+	public BigType(int id, String typeName, String imgUrl, Date createDate, Date editDate) {
 		super();
 		this.id = id;
 		this.typeName = typeName;
@@ -71,7 +78,7 @@ public class BigType {
 		this.createDate = createDate;
 		this.editDate = editDate;
 	}
-	public BigType(String typeName, String imgUrl, String createDate, String editDate) {
+	public BigType(String typeName, String imgUrl, Date createDate, Date editDate) {
 		super();
 		this.typeName = typeName;
 		this.imgUrl = imgUrl;
@@ -85,11 +92,14 @@ public class BigType {
 	public BigType() {
 		super();
 	}
+	
+	/*
+	 * toString方法
+	 */
 	@Override
 	public String toString() {
 		return "BigType [id=" + id + ", typeName=" + typeName + ", imgUrl=" + imgUrl + ", createDate=" + createDate
-				+ ", editDate=" + editDate + ", smallTypes=" + smallTypes + "]";
-	}  
-	
+				+ ", editDate=" + editDate + "]";
+	}
 	
 }

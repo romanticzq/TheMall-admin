@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -84,12 +85,12 @@
 					    '<td>'+item.productName+'</td>'+  
 					    '<td>'+item.number+'</td>'+  
 					    '<td>'+item.price+'</td>'+  
-					    '<td>'+item.description+'</td>'+  
-					    '<td>'+item.type.typeName+'</td>'+ 
-					    '<td>'+item.type.bigType.typeName+'</td>'+  
-					    '<td>'+item.createDate+'</td>'+  
-					    '<td>'+item.editDate+'</td>'+ 
-					    '<td><a onclick="product_to_edit('+item.id+')">【修改】</a>&nbsp;<a href="#" onclick="return delete_product('+item.id+')">【删除】</a></td></tr>'; 
+					    '<td>'+item.descr+'</td>'+  
+					    '<td>'+item.smallType.typeName+'</td>'+ 
+					    '<td>'+item.smallType.bigType.typeName+'</td>'+  
+					    '<td>'+format(item.createDate)+'</td>'+  
+					    '<td>'+format(item.editDate)+'</td>'+ 
+					    '<td><a href="product_to_update?id='+item.productId+'">【修改】</a>&nbsp;<a href="#" onclick="delete_product('+item.productId+')">【删除】</a></td></tr>'; 
 					 $('table').append(data); 
 				 })
 				}
@@ -118,12 +119,11 @@
     </script>
 </head>
 <body>
-	<jsp:include page="../common/header.jsp" />
 	<div id="center">
-		<jsp:include page="../common/left.jsp" />
 
 		<div id="content">
-			<div id="right">
+			<div id="right" style="margin-left:20px;">
+				<b>首页 > 商品管理 > 商品列表</b><p></p>	
 				<div id="right_head">
 					
 					<form method="post" action="product_list">
@@ -142,7 +142,7 @@
 						<input type="submit" value="查询">
 						<input type="reset" value="重置">
 					</form>
-					<button onclick="product_to_edit()">新增商品</button>
+					<button onclick="javascript:window.location.href='product_to_edit?id=0'" style="display:none">新增商品</button>
 				</div>
 
 				<div id="right_foot">
@@ -163,12 +163,16 @@
 								<td>${temp.productName }</td>
 								<td>${temp.number }</td>
 								<td>${temp.price }</td>
-								<td>${temp.description }</td>
-								<td>${temp.type.typeName }</td>
-								<td>${temp.type.bigType.typeName }</td>
-								<td>${temp.createDate }</td>
-								<td>${temp.editDate }</td>
-								<td><a  onclick="return product_to_edit(${temp.id})">【修改】</a>&nbsp;<a href="#" onclick="return delete_product(${temp.id})">【删除】</a></td>
+								<td>${temp.descr }</td>
+								<td>${temp.smallType.typeName }</td>
+								<td>${temp.smallType.bigType.typeName }</td>
+								<td>
+									<fmt:formatDate value="${temp.createDate }" pattern="yyyy-MM-dd HH:mm:ss" />
+								</td>
+								<td>
+									<fmt:formatDate value="${temp.editDate }" pattern="yyyy-MM-dd HH:mm:ss" />
+								</td>
+								<td><a  href="product_to_update?id=${temp.productId}">【修改】</a>&nbsp;<a href="#" onclick="delete_product(${temp.productId})">【删除】</a></td>
 							</tr>
 						</c:forEach>
 						
@@ -193,7 +197,6 @@
 					<label>当前页数:<span></span>，共:<span></span>页，<span></span>条记录</label>
 				</div>
 			</div>
-			<footer>Copyright2017轻实训版权所有</footer>
 		</div>
 	</div>
 </body>

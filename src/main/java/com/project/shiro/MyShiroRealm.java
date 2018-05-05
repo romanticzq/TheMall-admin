@@ -11,7 +11,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.project.model.AdminModel;
+import com.project.model.Admin;
 import com.project.service.LoginService;
 
 @Component
@@ -35,7 +35,7 @@ public class MyShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(
             AuthenticationToken authcToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-        AdminModel admin=loginService.adminLoginByName(token.getUsername());
+        Admin admin=loginService.adminLoginByName(token.getUsername());
         admin.setPassword("");
         return new SimpleAuthenticationInfo(admin, token.getPassword(), getName()); 
     }

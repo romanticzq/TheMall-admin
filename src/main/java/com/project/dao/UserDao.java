@@ -2,15 +2,15 @@ package com.project.dao;
 
 import java.util.List;
 
-import com.project.model.UserModel;
+import com.project.model.User;
 
 public interface UserDao {
 
 	//查询用户
-	public List<UserModel> userList(String userName,int status,int sex);
+	public List<User> userList(String userName,String status,String sex);
 	
 	//分页查询用户
-	public List<UserModel> userListPage(String userName,int status,int sex,int index);
+	public List<User> userListPage(String userName,String status,String sex,int index);
 	
 	//修改用户状态
 	public void userEdit(int id);

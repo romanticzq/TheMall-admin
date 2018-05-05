@@ -9,23 +9,23 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/plugins/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/common.js"></script>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/style.css">
+
+<link href="<%=request.getContextPath()%>/res/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="<%=request.getContextPath()%>/res/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/res/jqPaginator.min.js" type="text/javascript"></script>
+    <link href="<%=request.getContextPath()%>/res/myPage.css" rel="stylesheet" type="text/css" />
+    <script src="<%=request.getContextPath()%>/res/myPage.js" type="text/javascript"></script>
 </head>
 <body>
-	<jsp:include page="../common/header.jsp" />
 	<div id="center-add">
-		<jsp:include page="../common/left.jsp" />
 
 		<div id="content-add">
-			<div id="right-add">
+			<div id="right-add" style="margin-left:20px;">
+				<b>首页 > 商品管理 > 新增商品</b><p></p>	
 				<form action="#" onsubmit="return product_edit()" method="post" id="newsForm">
-					<h3>新增&修改商品信息</h3>
-					<div id="right-add-center">
+					<div id="right-add-center" style="">
 						<div id="right-add-center-left">
-							<input type="hidden" value="${product.id}"  name="id" id="id">
-							<p>商品名称：<input type="text" placeholder="请输入商品名称！" class="input" required name="productName" id="productName" value="${product.productName }"></p>
-							<p>数量：<input type="text" placeholder="请输入商品数量！" class="input" required name="number" id="number" value="${product.number }"></p>
-							<p>单价：<input type="text" placeholder="请输入商品单价！" class="input" required name="price" id="price" value="${product.price }"></p>
-							<p>描述：<input type="text" placeholder="请输入商品描述！" class="input" required name="description" id="description" value="${product.description }"></p>
+							<input type="hidden" value="${product.productId}"  name="id" id="id">
 							<p>商品类型：
 								<select name="type.typeName" id="typeName">
 									<c:forEach items="${type }" var="temp">
@@ -33,14 +33,13 @@
 									</c:forEach>
 								</select>
 							</p>
-							<p><input type="file"  class="input" onchange="preview(this)" name="imgUrl" id="imgUrl"></p>
-							<img src="<%=request.getContextPath()%>${product.imgUrl }">
-						</div>
-						
-						<div id="right-add-center-right">
-							<p><input type="file"  class="input" onchange="preview(this)" name="imgUrl" id="imgUrl"></p>
-							<img src="<%=request.getContextPath()%>${product.imgUrl }">
+							<p>商品名称：<span style="margin-left:5px;"></span><input type="text" placeholder="请输入商品名称！" class="input" required name="productName" id="productName" value="${product.productName }"></p>
+							<p>数<span style="margin-left:28px;"></span>量：<span style="margin-left:4px;"></span><input type="text" placeholder="请输入商品数量！" class="input" required name="number" id="number" value="${product.number }"></p>
+							<p>单<span style="margin-left:28px;"></span>价：<span style="margin-left:4px;"></span><input type="text" placeholder="请输入商品单价！" class="input" required name="price" id="price" value="${product.price }"></p>
+							<p>描<span style="margin-left:28px;"></span>述：<span style="margin-left:4px;"></span><input type="text" placeholder="请输入商品描述！" class="input" required name="description" id="description" value="${product.descr }"></p>
 							
+							<p>商品图片：<input type="file"  class="input" onchange="preview(this)" name="imgUrl" id="imgUrl" value="${product.imgUrl}" style="display:none"></p>
+							<img src="${product.imgUrl}" onclick="fileSelect()" id="img" style="margin-left:80px" onerror='this.src="<%=request.getContextPath()%>/images/uploadimage.jpg"'>
 						</div>
 					</div>
 					<hr>
@@ -52,7 +51,6 @@
 					</div>
 				</form>	
 			</div>
-			<footer>Copyright2017轻实训版权所有</footer>
 		</div>
 	</div>
 </body>

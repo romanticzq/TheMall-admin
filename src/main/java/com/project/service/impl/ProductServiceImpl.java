@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.dao.ProductDao;
-import com.project.model.ProductModel;
+import com.project.model.Commodity;
 import com.project.service.ProductService;
 
 @Service
@@ -21,7 +21,7 @@ public class ProductServiceImpl implements ProductService{
 	 * 查询商品
 	 */
 	@Override
-	public List<ProductModel> productList(String name,String typeName,String bigTypeName) {
+	public List<Commodity> productList(String name,String typeName,String bigTypeName) {
 		
 		return this.productDao.productList(name,typeName,bigTypeName);
 	}
@@ -30,7 +30,7 @@ public class ProductServiceImpl implements ProductService{
 	 * 分页查询商品
 	 */
 	@Override
-	public List<ProductModel> productListPage(String name, String typeName,String bigTypeName, int index) {
+	public List<Commodity> productListPage(String name, String typeName,String bigTypeName, int index) {
 		
 		return this.productDao.productListPage(name, typeName,bigTypeName, index);
 	}
@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService{
 	 * 根据id查询商品
 	 */
 	@Override
-	public ProductModel productById(int id) {
+	public Commodity productById(int id) {
 		
 		return this.productDao.productById(id);
 	}
@@ -48,7 +48,7 @@ public class ProductServiceImpl implements ProductService{
 	 * 修改或增加商品
 	 */
 	@Override
-	public void productEdit(ProductModel productModel) {
+	public void productEdit(Commodity productModel) {
 		
 		this.productDao.productEdit(productModel);
 	}

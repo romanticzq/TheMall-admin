@@ -17,17 +17,15 @@
     <script src="<%=request.getContextPath()%>/res/myPage.js" type="text/javascript"></script>
 </head>
 <body>
-	<jsp:include page="../common/header.jsp" />
 	<div id="center-add">
-		<jsp:include page="../common/left.jsp" />
 
 		<div id="content-add">
-			<div id="right-add">
+			<div id="right-add" style="margin-left:20px;">
+				<b>首页 > 商品管理 > 新增商品类别</b><p></p>	
 				<form action="#" onsubmit="return productType_edit()" method="post">
-					<h3>新增&修改商品类别信息</h3>
 					<div id="right-add-center">
 						<div id="right-add-center-left">
-							<input type="hidden" value="${productType.id}"  name="id">
+							<input type="hidden" value="${productType.id}"  name="id" id="id">
 							<p>顶级商品类型：
 								<select name="bigTypeName" id="bigTypeName">
 									<c:forEach items="${bigType }" var="temp">
@@ -35,7 +33,7 @@
 									</c:forEach>
 								</select>
 							</p>
-							<p>商品类型名称：<input type="text" placeholder="请输入商品类型名称！" class="input" required name="typeName" value="${productType.typeName }"></p>
+							<p>商品类型名称：<input type="text" placeholder="请输入商品类型名称！" class="input" required name="typeName" value="${productType.typeName }" id="typeName"></p>
 						</div>
 					</div>
 					<hr>
@@ -43,21 +41,11 @@
 						<input id="sub" type="submit" value="保存">
 						<input id="res" type="reset" value="重置">
 						<input id="but" type="button" value="返回" 
-						onclick="back()">
+						onclick="backType()">
 					</div>
 				</form>	
 			</div>
-			<footer>Copyright2017轻实训版权所有</footer>
 		</div>
 	</div>
 </body>
-<script type="text/javascript">
-	function onload() {
-		alert(1);
-		$("select option").removeAttr("selected");
-		var bigTypeName=$("#bigTypeName").val();
-	    $("select option:[value="+bigTypeName+"]").attr("selected","selected");
-	  	alert(1);
-	}
-</script>
 </html>

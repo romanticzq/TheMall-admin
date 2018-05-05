@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.dao.ProductTypeDao;
-import com.project.model.ProductTypeModel;
+import com.project.model.SmallType;
 import com.project.service.ProductTypeService;
 
 @Service
@@ -21,7 +21,7 @@ public class ProductTypeServiceImpl implements ProductTypeService{
 	 * 查询商品类型列表
 	 */
 	@Override
-	public List<ProductTypeModel> productTypeList(String typeName,String bigTypeName) {
+	public List<SmallType> productTypeList(String typeName,String bigTypeName) {
 		
 		return this.productTypeDao.productTypeList(typeName,bigTypeName);
 	}
@@ -30,7 +30,7 @@ public class ProductTypeServiceImpl implements ProductTypeService{
 	 * 分页查询商品类型列表
 	 */
 	@Override
-	public List<ProductTypeModel> productTypeListPage(String typeName,String bigTypeName,int index) {
+	public List<SmallType> productTypeListPage(String typeName,String bigTypeName,int index) {
 		
 		return this.productTypeDao.productTypeListPage(typeName,bigTypeName,index);
 	}
@@ -39,7 +39,7 @@ public class ProductTypeServiceImpl implements ProductTypeService{
 	 * 根据查询商品类型列表
 	 */
 	@Override
-	public ProductTypeModel productTypeList(int id) {
+	public SmallType productTypeList(int id) {
 		
 		return this.productTypeDao.productTypeById(id);
 	}
@@ -48,7 +48,7 @@ public class ProductTypeServiceImpl implements ProductTypeService{
 	 * 修改或增加商品类型列表
 	 */
 	@Override
-	public void productTypeEdit(ProductTypeModel productTypeModel) {
+	public void productTypeEdit(SmallType productTypeModel) {
 		
 		this.productTypeDao.productTypeEdit(productTypeModel);
 	}

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -19,15 +20,9 @@
     
 	    $(function () {
 	    	$("select option").removeAttr("selected");
-	        if($("#status").val()==0){
-	        	$("select option:eq(0)").attr("selected","selected");
-	        }else if($("#status").val()==1){
-	        	$("select option:eq(1)").attr("selected","selected");
-	        }else if($("#status").val()==2){
-	        	$("select option:eq(2)").attr("selected","selected");
-	        }else if($("#status").val()==3){
-	        	$("select option:eq(3)").attr("selected","selected");
-	        }
+	    	var sta=$("#status").val();
+	    	$("select option:[value="+sta+"]").attr("selected","selected");
+	        
 	    })
 	    
         function loadData(num) {
@@ -62,24 +57,20 @@
 				 var pageData=[];  
 				 $('table .tr1').html("");
 				 $.each(list,function(n,item){
-					 var status=null;
-					 if(item.status== 1){
-						 status="未发货";
-					 }else if(item.status== 2){
-						 status="已发货";
-					 }else if(item.status== 3){
-						 status="已签收";
+					 if(item.orderStatus=="待发货"){
+						 var str="【发货】";
+					 }else if(item.orderStatus=="待收货"){
+						 var str="【查看物流】";
 					 }
 					 var data='<tr class="tr1">'+  
-					    '<td>'+status+'</td>'+
-					    '<td>'+item.price+'</td>'+  
-					    '<td>'+item.number+'</td>'+  
+					    '<td>'+item.orderStatus+'</td>'+
+					    '<td>'+item.total_fee+'</td>'+  
+					    '<td>'+item.count+'</td>'+  
 					    '<td>'+item.message+'</td>'+  
 					    '<td>'+item.user.userName+'</td>'+  
-					    '<td>'+item.user.address+'</td>'+  
-					    '<td>'+item.createDate+'</td>'+  
-					    '<td>'+item.editDate+'</td>'+  
-					    '<td><a href="#" onclick="return judge_order('+item.id+','+item.status+')">【发货】</a>&nbsp;'+
+					    '<td>'+item.logistics+'</td>'+  
+					    '<td>'+format(item.createDate)+'</td>'+ 
+					    '<td><a href="order_to_delivery?id='+item.id+'">'+str+'</a>&nbsp;'+
 					    '<a href="order_?id='+item.id+'">【详情】</a></td></tr>'; 
 					 $('table').append(data); 
 				 })
@@ -89,21 +80,21 @@
     </script>
 </head>
 <body>
-	<jsp:include page="../common/header.jsp" />
 	<div id="center">
-		<jsp:include page="../common/left.jsp" />
 
 		<div id="content">
-			<div id="right">
+			<div id="right" style="margin-left:20px;">
+				<b>首页 > 订单管理 > 订单列表</b><p></p>	
 				<div id="right_head">
 					
 					<form method="post" action="order_list">
 						订单状态：
 						<select name="status" style="width:220px">
-							<option value="a" >所有</option>
-							<option value="w" >未发货</option>
-							<option value="f" >已发货</option>
-							<option value="q" >已签收</option>
+							<option value="" >所有</option>
+							<option value="未付款" >未付款</option>
+							<option value="未发货" >未发货</option>
+							<option value="已发货" >已发货</option>
+							<option value="已签收" >已签收</option>
 						</select>
 						用户名称：<input type="text" name="userName" id="userName" value="${userName}">
 						<input type="submit" value="查询">
@@ -119,28 +110,28 @@
 							<td>数量</td>
 							<td>留言</td>
 							<td>用户</td>
-							<td>地址</td>
+							<td>指定快递</td>
 							<td>创建时间</td>
-							<td>修改时间</td>
 							<td style="text-align:center">操作</td>
 						</tr>
 						<c:forEach items="${orderList}" var="temp" >
 							<tr class="tr1">
-								<td>
-								    <c:if test="${temp.status == 1 }">未发货</c:if>  
-									<c:if test="${temp.status == 2 }">已发货</c:if>  
-									<c:if test="${temp.status == 3 }">已签收</c:if> 
-								</td>
-								<td>${temp.price }</td>
-								<td>${temp.number }</td>
+								<td>${temp.orderStatus }</td>
+								<td>${temp.total_fee }</td>
+								<td>${temp.count }</td>
 								<td>${temp.message }</td>
 								<td>${temp.user.userName }</td>
-								<td>${temp.user.address }</td>
+								<td>${temp.logistics }</td>
 								<td>${temp.createDate }</td>
-								<td>${temp.editDate }</td>
 								<td>
-									<a href="#" onclick="return judge_order('${temp.id}','${temp.status}')">【发货】</a>
-									<a href="order_?id=${temp.id}">【详情】</a>
+									<c:if test="${temp.orderStatus == '待发货' }">
+										<a href="order_to_delivery?id=${temp.id}" >【发货】</a>
+									</c:if>  
+									<c:if test="${temp.orderStatus == '待收货' }">
+										<a href="checkLog?id=${temp.id}" >【查看物流】</a>
+									</c:if>
+									&nbsp;
+									<a href="order_to_detail?id=${temp.id}" >【订单详情】</a>
 								</td>
 							</tr>
 						</c:forEach>
@@ -164,7 +155,6 @@
 					<label>当前页数:<span></span>，共:<span></span>页，<span></span>条记录</label>
 				</div>
 			</div>
-			<footer>CopyRight&nbsp;2018&nbsp;&nbsp;重庆工商大学&nbsp;版权所有</footer>
 		</div>
 	</div>
 </body>

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.dao.OrderDao;
-import com.project.model.OrderModel;
+import com.project.model.Orders;
 
 @Repository
 public class OrderDaoImpl implements OrderDao{
@@ -20,20 +20,20 @@ public class OrderDaoImpl implements OrderDao{
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<OrderModel> orderList(int status,String userName) {
+	public List<Orders> orderList(String status,String userName) {
 
-		String query="from OrderModel";
+		String query="from Orders";
 		if(userName!=null&&userName!=""){
 			userName="%"+userName+"%";
-			if(status!=0){
-				query=query+" where status=? and user_id in (select id from UserModel where userName like ?)";
+			if(status!=null&&status!=""){
+				query=query+" where status=? and u_id1 in (select userId from User where userName like ?)";
 				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, status).setParameter(1, userName).list();
 			}else{
-				query=query+" where user_id in (select id from UserModel where userName like ?)";
+				query=query+" where u_id1 in (select userId from User where userName like ?)";
 				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, userName).list();
 			}
 		}else{
-			if(status!=0){
+			if(status!=null&&status!=""){
 				query=query+" where status=?";
 				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, status).list();
 			}else{
@@ -49,20 +49,20 @@ public class OrderDaoImpl implements OrderDao{
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<OrderModel> orderListPage(int status, String userName, int index) {
+	public List<Orders> orderListPage(String status, String userName, int index) {
 		
-		String query="from OrderModel";
+		String query="from Orders";
 		if(userName!=null&&userName!=""){
 			userName="%"+userName+"%";
-			if(status!=0){
-				query=query+" where status=? and user_id in (select id from UserModel where userName like ?)";
+			if(status!=null&&status!=""){
+				query=query+" where status=? and u_id1 in (select userId from User where userName like ?)";
 				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, status).setParameter(1, userName).setFirstResult((index-1)*5).setMaxResults(5).list();
 			}else{
-				query=query+" where user_id in (select id from UserModel where userName like ?)";
+				query=query+" where u_id1 in (select userId from User where userName like ?)";
 				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, userName).setFirstResult((index-1)*5).setMaxResults(5).list();
 			}
 		}else{
-			if(status!=0){
+			if(status!=null&&status!=""){
 				query=query+" where status=?";
 				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, status).setFirstResult((index-1)*5).setMaxResults(5).list();
 			}else{
@@ -73,16 +73,21 @@ public class OrderDaoImpl implements OrderDao{
 	}
 
 	/**
-	 * 订单发货
+	 * 根据id查找订单
 	 */
 	@Override
-	public void orderSend(int id) {
+	public Orders findOrdersById(int id) {
 		
-		OrderModel order=(OrderModel) this.sessionFactory.getCurrentSession().createQuery("from OrderModel where id=?").setParameter(0,id).uniqueResult();
-		if(order.getStatus()==1){
-			order.setStatus(2);
-		}
-		this.sessionFactory.getCurrentSession().update(order);
+		return (Orders) this.sessionFactory.getCurrentSession().createQuery("from Orders where id=?").setParameter(0,id).uniqueResult();
+	}
+
+	/**
+	 * 保存订单
+	 */
+	@Override
+	public void saveOrders(Orders order) {
+		
+		this.sessionFactory.getCurrentSession().saveOrUpdate(order);
 	}
 	
 }

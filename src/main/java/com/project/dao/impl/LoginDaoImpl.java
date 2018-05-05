@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.dao.LoginDao;
-import com.project.model.AdminModel;
+import com.project.model.Admin;
 
 @Repository
 public class LoginDaoImpl implements LoginDao{
@@ -18,7 +18,7 @@ public class LoginDaoImpl implements LoginDao{
 	 */
 	@Override
 	public boolean adminLogin(String name, String password) {
-		AdminModel admin =(AdminModel) sessionFactory.getCurrentSession().createQuery("from AdminModel where userName=? and passWord=?").setParameter(0, name).setParameter(1, password).uniqueResult();
+		Admin admin =(Admin) sessionFactory.getCurrentSession().createQuery("from Admin where userName=? and passWord=?").setParameter(0, name).setParameter(1, password).uniqueResult();
 		if(admin!=null) {
 			return true;
 		}
@@ -27,8 +27,8 @@ public class LoginDaoImpl implements LoginDao{
 
 	
 	@Override
-	public AdminModel adminLoginByName(String name) {
-		AdminModel admin =(AdminModel) sessionFactory.getCurrentSession().createQuery("from AdminModel where userName=?").setParameter(0, name).uniqueResult();
+	public Admin adminLoginByName(String name) {
+		Admin admin =(Admin) sessionFactory.getCurrentSession().createQuery("from AdminModel where userName=?").setParameter(0, name).uniqueResult();
 		return admin;
 	}
 

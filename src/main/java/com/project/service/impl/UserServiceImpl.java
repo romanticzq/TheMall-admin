@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.dao.UserDao;
-import com.project.model.UserModel;
+import com.project.model.User;
 import com.project.service.UserService;
 
 @Transactional
@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService{
 	 * 查询用户
 	 */
 	@Override
-	public List<UserModel> userList(String userName,int status,int sex) {
+	public List<User> userList(String userName,String status,String sex) {
 		
 		return this.userDao.userList(userName,status,sex);
 	}
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService{
 	 * 分页查询用户
 	 */
 	@Override
-	public List<UserModel> userListPage(String userName, int status, int sex, int index) {
+	public List<User> userListPage(String userName, String status, String sex, int index) {
 		
 		return this.userDao.userListPage(userName, status, sex, index);
 	}

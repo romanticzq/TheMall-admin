@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.project.dao.ProductDao;
 import com.project.dao.ProductTypeDao;
-import com.project.model.ProductModel;
-import com.project.model.ProductTypeModel;
+import com.project.model.Commodity;
+import com.project.model.SmallType;
 
 @Repository
 public class ProductDaoImpl implements ProductDao{
@@ -25,17 +25,17 @@ public class ProductDaoImpl implements ProductDao{
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ProductModel> productList(String name,String typeName,String bigTypeName) {
+	public List<Commodity> productList(String name,String typeName,String bigTypeName) {
 		
-		String query="from ProductModel";
+		String query="from Commodity";
 		if(name!=null&&name!=""){
 			name="%"+name+"%";
 			if(typeName!=null&&typeName!=""){
-				query=query+" where productName like ? and type_id=(select id from ProductTypeModel where typeName=?)";
+				query=query+" where productName like ? and small_id=(select id from SmallType where typeName=?)";
 				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, name).setParameter(1,typeName).list();
 			}else{
 				if(bigTypeName!=null&&bigTypeName!=""){
-					query=query+" where productName like ? and type_id in (select id from ProductTypeModel where bigType_id=(select id from BigType where typeName=?))";
+					query=query+" where productName like ? and small_id in (select id from SmallType where big_id=(select id from BigType where typeName=?))";
 					return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, name).setParameter(1,bigTypeName).list();
 				}else{
 					query=query+" where productName like ?";
@@ -44,11 +44,11 @@ public class ProductDaoImpl implements ProductDao{
 			}	
 		}else{
 			if(typeName!=null&&typeName!=""){
-				query=query+" where type_id=(select id from ProductTypeModel where typeName=?)";
+				query=query+" where small_id=(select id from SmallType where typeName=?)";
 				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0,typeName).list();
 			}else{
 				if(bigTypeName!=null&&bigTypeName!=""){
-					query=query+" where type_id in (select id from ProductTypeModel where bigType_id=(select id from BigType where typeName=?))";
+					query=query+" where small_id in (select id from SmallType where big_id=(select id from BigType where typeName=?))";
 					return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, bigTypeName).list();
 				}else{
 					return this.sessionFactory.getCurrentSession().createQuery(query).list();
@@ -63,17 +63,17 @@ public class ProductDaoImpl implements ProductDao{
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ProductModel> productListPage(String name, String typeName,String bigTypeName, int index) {
+	public List<Commodity> productListPage(String name, String typeName,String bigTypeName, int index) {
 		
-		String query="from ProductModel";
+		String query="from Commodity";
 		if(name!=null&&name!=""){
 			name="%"+name+"%";
 			if(typeName!=null&&typeName!=""){
-				query=query+" where productName like ? and type_id=(select id from ProductTypeModel where typeName=?)";
+				query=query+" where productName like ? and small_id=(select id from SmallType where typeName=?)";
 				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, name).setParameter(1,typeName).setFirstResult((index-1)*5).setMaxResults(5).list();
 			}else{
 				if(bigTypeName!=null&&bigTypeName!=""){
-					query=query+" where productName like ? and type_id in (select id from ProductTypeModel where bigType_id=(select id from BigType where typeName=?))";
+					query=query+" where productName like ? and small_id in (select id from SmallType where big_id=(select id from BigType where typeName=?))";
 					return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, name).setParameter(1,bigTypeName).setFirstResult((index-1)*5).setMaxResults(5).list();
 				}else{
 					query=query+" where productName like ?";
@@ -82,11 +82,11 @@ public class ProductDaoImpl implements ProductDao{
 			}	
 		}else{
 			if(typeName!=null&&typeName!=""){
-				query=query+" where type_id=(select id from ProductTypeModel where typeName=?)";
+				query=query+" where small_id=(select id from SmallType where typeName=?)";
 				return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0,typeName).setFirstResult((index-1)*5).setMaxResults(5).list();
 			}else{
 				if(bigTypeName!=null&&bigTypeName!=""){
-					query=query+" where type_id in (select id from ProductTypeModel where bigType_id=(select id from BigType where typeName=?))";
+					query=query+" where small_id in (select id from SmallType where big_id=(select id from BigType where typeName=?))";
 					return this.sessionFactory.getCurrentSession().createQuery(query).setParameter(0, bigTypeName).setFirstResult((index-1)*5).setMaxResults(5).list();
 				}else{
 					return this.sessionFactory.getCurrentSession().createQuery(query).setFirstResult((index-1)*5).setMaxResults(5).list();
@@ -99,19 +99,19 @@ public class ProductDaoImpl implements ProductDao{
 	 * 根据id查询商品列表
 	 */
 	@Override
-	public ProductModel productById(int id) {
+	public Commodity productById(int id) {
 		
-		return (ProductModel)this.sessionFactory.getCurrentSession().createQuery("from ProductModel where id=?").setParameter(0, id).uniqueResult();
+		return (Commodity)this.sessionFactory.getCurrentSession().createQuery("from Commodity where id=?").setParameter(0, id).uniqueResult();
 	}
 	
 	/**
 	 * 修改或增加商品
 	 */
 	@Override
-	public void productEdit(ProductModel productModel) {
+	public void productEdit(Commodity productModel) {
 		
-		List<ProductTypeModel> type=ProductTypeDao.productTypeList(productModel.getType().getTypeName(),null);
-		productModel.setType(type.get(0));
+		List<SmallType> type=ProductTypeDao.productTypeList(productModel.getSmallType().getTypeName(),null);
+		productModel.setSmallType(type.get(0));
 		this.sessionFactory.getCurrentSession().saveOrUpdate(productModel);
 	}
 
@@ -121,7 +121,7 @@ public class ProductDaoImpl implements ProductDao{
 	@Override
 	public void productDelete(int id) {
 		
-		ProductModel productType=new ProductModel(id);
+		Commodity productType=new Commodity(id);
 		this.sessionFactory.getCurrentSession().delete(productType);
 	}
 

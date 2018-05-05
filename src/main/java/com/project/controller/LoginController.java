@@ -1,5 +1,7 @@
 package com.project.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,16 +39,39 @@ public class LoginController {
 	}
 	
 	/**
+	 * 去到首页
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value="welcome")
+	public ModelAndView  welcome(){
+		
+		return new ModelAndView("welcome");
+	}
+	
+	/**
 	 * 判断用户登录
 	 * @param user
 	 * @return
 	 */
 	@RequestMapping(value="adminLogin")
 	@ResponseBody
-	public String  adminLogin(String name,String password){
+	public String  adminLogin(String name,String password,String val,HttpServletRequest request){
 		System.out.println("登录验证");
-		System.out.println(name+password);
+		System.out.println(val);
 		JSONObject json=new JSONObject();
+		//验证码
+        String validatecode = (String)request.getSession().getAttribute("ValidateCode");
+        if(validatecode==null){
+        	json.put("msg", "请刷新验证码");
+        	return json.toJSONString();
+        }
+        request.getSession().removeAttribute("ValidateCode");
+        if(!validatecode.equalsIgnoreCase(val)){
+        	json.put("msg", "验证码错误");
+        	return json.toJSONString();
+        }
+        json.put("msg", false);
 		if(this.loginService.adminLogin(name, password)){
 //			return new ModelAndView("main");
 			json.put("success", true);

@@ -38,6 +38,9 @@
 			font-family: myFont;
 			font-size: 30px;
 		}
+		.logo {
+			font-family: myFont;
+		}
 		header a {
 			margin-right: 20px;
 			color: #FFFFFF;
@@ -92,6 +95,9 @@
 			margin-top: 20px;
 			width: 1100px;
 		}
+		table th,td{
+			height:30px;
+			}
 		table a{
 			text-decoration: none;
 			color: #000000;
@@ -178,6 +184,12 @@
 			margin-left: 30px;
 		}
 		#right-add-center-right img {
+			border: 1px solid gray;
+			width: 200px;
+			height: 200px;
+			border-radius: 15px;
+		}
+		#img {
 			border: 1px solid gray;
 			width: 200px;
 			height: 200px;

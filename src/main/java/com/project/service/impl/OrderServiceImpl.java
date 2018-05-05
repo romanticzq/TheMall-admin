@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.dao.OrderDao;
-import com.project.model.OrderModel;
+import com.project.model.Orders;
 import com.project.service.OrderService;
 
 @Transactional
@@ -21,7 +21,7 @@ public class OrderServiceImpl implements OrderService{
 	 * 查询订单
 	 */
 	@Override
-	public List<OrderModel> orderList(int status,String userName) {
+	public List<Orders> orderList(String status,String userName) {
 		
 		return this.orderDao.orderList(status,userName);
 	}
@@ -30,17 +30,26 @@ public class OrderServiceImpl implements OrderService{
 	 * 分页查询订单
 	 */
 	@Override
-	public List<OrderModel> orderListPage(int status,String userName,int index) {
+	public List<Orders> orderListPage(String status,String userName,int index) {
 		
 		return this.orderDao.orderListPage(status,userName,index);
 	}
 
 	/**
-	 * 订单发货
+	 * 根据id查询订单
 	 */
 	@Override
-	public void orderSend(int id) {
+	public Orders findOrdersById(int id) {
 		
-		this.orderDao.orderSend(id);
+		return this.orderDao.findOrdersById(id);
+	}
+
+	/**
+	 * 保存订单
+	 */
+	@Override
+	public void saveOrders(Orders order) {
+		
+		this.orderDao.saveOrders(order);
 	}
 }
